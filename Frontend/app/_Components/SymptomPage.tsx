@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, JSX } from "react";
 import { Button } from "../../components/ui/button";
 import { CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
@@ -40,8 +40,8 @@ const SymptomChecker = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  const [selectedConditions, setSelectedConditions] = useState([]);
+  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
+  const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
   const [currentGradient, setCurrentGradient] = useState(0);
 
   const gradients = [
@@ -55,7 +55,7 @@ const SymptomChecker = () => {
       setCurrentGradient((prev) => (prev + 1) % gradients.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [gradients.length]);
 
   const commonSymptoms = [
     { name: "Fever", icon: <Thermometer className="h-4 w-4" /> },
@@ -108,7 +108,7 @@ const SymptomChecker = () => {
     { name: "HIV/AIDS", icon: <Shield className="h-4 w-4" /> },
   ];
 
-  const SymptomChip = ({ symptom, selected, onClick }) => (
+  const SymptomChip = ({ symptom, selected, onClick }: { symptom: { name: string; icon: JSX.Element }; selected: boolean; onClick: () => void }) => (
     <motion.div
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -149,7 +149,7 @@ const SymptomChecker = () => {
     </motion.div>
   );
 
-  const StepHeader = ({ number, title, description }) => (
+  const StepHeader = ({ number, title, description }: { number: number; title: string; description: string }) => (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -175,6 +175,12 @@ const SymptomChecker = () => {
       </div>
     </motion.div>
   );
+
+  const handleSubmit = () => {
+    // Add your form submission logic here
+    setFormSubmitted(true);
+    setStep(4);
+  };
 
   const renderStepContent = () => {
     switch (step) {
