@@ -1,14 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Button } from "../../components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "../../components/ui/card";
+import { CardContent } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Slider } from "../../components/ui/slider";
@@ -35,13 +28,11 @@ import {
   Zap,
   Heart,
   Pill,
-  AlertTriangle,
-  Send,
   Shield,
+  Send,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "../../lib/utils"; // Ensure you have this utility
-import Navbar from "./Navbar";
+import { cn } from "../../lib/utils";
 
 const SymptomChecker = () => {
   const [step, setStep] = useState(1);
@@ -66,56 +57,56 @@ const SymptomChecker = () => {
     return () => clearInterval(interval);
   }, []);
 
- const commonSymptoms = [
-   { name: "Fever", icon: <Thermometer className="h-4 w-4" /> },
-   { name: "Headache", icon: <Zap className="h-4 w-4" /> },
-   { name: "Cough", icon: <Activity className="h-4 w-4" /> },
-   { name: "Fatigue", icon: <AlertCircle className="h-4 w-4" /> },
-   { name: "Muscle Pain", icon: <Activity className="h-4 w-4" /> },
-   { name: "Shortness of Breath", icon: <Activity className="h-4 w-4" /> },
-   { name: "Chest Pain", icon: <Heart className="h-4 w-4" /> },
-   { name: "Nausea", icon: <Activity className="h-4 w-4" /> },
-   { name: "Dizziness", icon: <Zap className="h-4 w-4" /> },
-   { name: "Loss of Appetite", icon: <Activity className="h-4 w-4" /> },
-   { name: "Abdominal Pain", icon: <Activity className="h-4 w-4" /> },
-   { name: "Joint Pain", icon: <Activity className="h-4 w-4" /> },
-   { name: "Rash", icon: <AlertCircle className="h-4 w-4" /> },
-   { name: "Sore Throat", icon: <Activity className="h-4 w-4" /> },
-   { name: "Runny Nose", icon: <Activity className="h-4 w-4" /> },
-   { name: "Back Pain", icon: <Activity className="h-4 w-4" /> },
-   { name: "Neck Pain", icon: <Activity className="h-4 w-4" /> },
-   { name: "Anxiety", icon: <AlertCircle className="h-4 w-4" /> },
-   { name: "Depression", icon: <AlertCircle className="h-4 w-4" /> },
-   { name: "Insomnia", icon: <Activity className="h-4 w-4" /> },
-   { name: "Diarrhea", icon: <Activity className="h-4 w-4" /> },
-   { name: "Constipation", icon: <Activity className="h-4 w-4" /> },
-   { name: "Vomiting", icon: <Activity className="h-4 w-4" /> },
-   { name: "Sweating", icon: <Activity className="h-4 w-4" /> },
-   { name: "Chills", icon: <Thermometer className="h-4 w-4" /> },
-   { name: "Numbness", icon: <Activity className="h-4 w-4" /> },
-   { name: "Tingling", icon: <Zap className="h-4 w-4" /> },
-   { name: "Vision Problems", icon: <AlertCircle className="h-4 w-4" /> },
-   { name: "Hearing Problems", icon: <AlertCircle className="h-4 w-4" /> },
-   { name: "Memory Issues", icon: <AlertCircle className="h-4 w-4" /> },
- ];
+  const commonSymptoms = [
+    { name: "Fever", icon: <Thermometer className="h-4 w-4" /> },
+    { name: "Headache", icon: <Zap className="h-4 w-4" /> },
+    { name: "Cough", icon: <Activity className="h-4 w-4" /> },
+    { name: "Fatigue", icon: <AlertCircle className="h-4 w-4" /> },
+    { name: "Muscle Pain", icon: <Activity className="h-4 w-4" /> },
+    { name: "Shortness of Breath", icon: <Activity className="h-4 w-4" /> },
+    { name: "Chest Pain", icon: <Heart className="h-4 w-4" /> },
+    { name: "Nausea", icon: <Activity className="h-4 w-4" /> },
+    { name: "Dizziness", icon: <Zap className="h-4 w-4" /> },
+    { name: "Loss of Appetite", icon: <Activity className="h-4 w-4" /> },
+    { name: "Abdominal Pain", icon: <Activity className="h-4 w-4" /> },
+    { name: "Joint Pain", icon: <Activity className="h-4 w-4" /> },
+    { name: "Rash", icon: <AlertCircle className="h-4 w-4" /> },
+    { name: "Sore Throat", icon: <Activity className="h-4 w-4" /> },
+    { name: "Runny Nose", icon: <Activity className="h-4 w-4" /> },
+    { name: "Back Pain", icon: <Activity className="h-4 w-4" /> },
+    { name: "Neck Pain", icon: <Activity className="h-4 w-4" /> },
+    { name: "Anxiety", icon: <AlertCircle className="h-4 w-4" /> },
+    { name: "Depression", icon: <AlertCircle className="h-4 w-4" /> },
+    { name: "Insomnia", icon: <Activity className="h-4 w-4" /> },
+    { name: "Diarrhea", icon: <Activity className="h-4 w-4" /> },
+    { name: "Constipation", icon: <Activity className="h-4 w-4" /> },
+    { name: "Vomiting", icon: <Activity className="h-4 w-4" /> },
+    { name: "Sweating", icon: <Activity className="h-4 w-4" /> },
+    { name: "Chills", icon: <Thermometer className="h-4 w-4" /> },
+    { name: "Numbness", icon: <Activity className="h-4 w-4" /> },
+    { name: "Tingling", icon: <Zap className="h-4 w-4" /> },
+    { name: "Vision Problems", icon: <AlertCircle className="h-4 w-4" /> },
+    { name: "Hearing Problems", icon: <AlertCircle className="h-4 w-4" /> },
+    { name: "Memory Issues", icon: <AlertCircle className="h-4 w-4" /> },
+  ];
 
- const preExistingConditions = [
-   { name: "Diabetes", icon: <Activity className="h-4 w-4" /> },
-   { name: "Hypertension", icon: <Activity className="h-4 w-4" /> },
-   { name: "Asthma", icon: <Activity className="h-4 w-4" /> },
-   { name: "Heart Disease", icon: <Heart className="h-4 w-4" /> },
-   { name: "Arthritis", icon: <Activity className="h-4 w-4" /> },
-   { name: "Cancer", icon: <AlertCircle className="h-4 w-4" /> },
-   { name: "Thyroid Disorder", icon: <Activity className="h-4 w-4" /> },
-   { name: "Kidney Disease", icon: <Activity className="h-4 w-4" /> },
-   { name: "Liver Disease", icon: <Activity className="h-4 w-4" /> },
-   { name: "Mental Health Condition", icon: <Activity className="h-4 w-4" /> },
-   { name: "Autoimmune Disease", icon: <Shield className="h-4 w-4" /> },
-   { name: "Chronic Pain", icon: <Activity className="h-4 w-4" /> },
-   { name: "Migraine", icon: <Zap className="h-4 w-4" /> },
-   { name: "Epilepsy", icon: <Activity className="h-4 w-4" /> },
-   { name: "HIV/AIDS", icon: <Shield className="h-4 w-4" /> },
- ];
+  const preExistingConditions = [
+    { name: "Diabetes", icon: <Activity className="h-4 w-4" /> },
+    { name: "Hypertension", icon: <Activity className="h-4 w-4" /> },
+    { name: "Asthma", icon: <Activity className="h-4 w-4" /> },
+    { name: "Heart Disease", icon: <Heart className="h-4 w-4" /> },
+    { name: "Arthritis", icon: <Activity className="h-4 w-4" /> },
+    { name: "Cancer", icon: <AlertCircle className="h-4 w-4" /> },
+    { name: "Thyroid Disorder", icon: <Activity className="h-4 w-4" /> },
+    { name: "Kidney Disease", icon: <Activity className="h-4 w-4" /> },
+    { name: "Liver Disease", icon: <Activity className="h-4 w-4" /> },
+    { name: "Mental Health Condition", icon: <Activity className="h-4 w-4" /> },
+    { name: "Autoimmune Disease", icon: <Shield className="h-4 w-4" /> },
+    { name: "Chronic Pain", icon: <Activity className="h-4 w-4" /> },
+    { name: "Migraine", icon: <Zap className="h-4 w-4" /> },
+    { name: "Epilepsy", icon: <Activity className="h-4 w-4" /> },
+    { name: "HIV/AIDS", icon: <Shield className="h-4 w-4" /> },
+  ];
 
   const SymptomChip = ({ symptom, selected, onClick }) => (
     <motion.div
@@ -333,7 +324,7 @@ const SymptomChecker = () => {
                 Primary Symptoms
               </Label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                {commonSymptoms.map((symptom, index) => (
+                {commonSymptoms.map((symptom) => (
                   <SymptomChip
                     key={symptom.name}
                     symptom={symptom}

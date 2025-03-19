@@ -1,4 +1,4 @@
-'use client';
+"use client";
 // pages/book-appointment.js
 import { useState } from "react";
 import Head from "next/head";
@@ -113,8 +113,8 @@ export default function BookAppointment() {
                 Appointment Requested!
               </h2>
               <p className="text-gray-600 mb-6">
-                We've received your appointment request and will confirm shortly
-                via email.
+                We&apos;ve received your appointment request and will confirm
+                shortly via email.
               </p>
               <button
                 onClick={() => setSubmitted(false)}

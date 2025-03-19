@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { Card, CardContent } from "../../components/ui/card";
-import { Video, Calendar, Clock, Phone, X } from "lucide-react";
+import { Video, Calendar, Clock, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
 const VideoConsultationPage = () => {
   const [activeCall, setActiveCall] = useState(false);
 

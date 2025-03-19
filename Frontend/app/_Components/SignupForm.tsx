@@ -2,26 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../../components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Alert, AlertDescription } from "../../components/ui/alert";
-import {
-  Mail,
-  Lock,
-  User,
-  ArrowRight,
-  CheckCircle,
-  X,
-  Shield,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Mail, Lock, User, ArrowRight, CheckCircle, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 const SignupForm = () => {
   const router = useRouter();
