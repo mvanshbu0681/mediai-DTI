@@ -1,27 +1,41 @@
-'use client';
+"use client";
 import React, { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:5000"); // Change to your backend URL
+import { io, Socket } from "socket.io-client";
 
 const VideoCall = () => {
   const [myPhoneNumber, setMyPhoneNumber] = useState("");
   const [callTo, setCallTo] = useState("");
-  const [inCall, setInCall] = useState(false);
-  const localVideoRef = useRef(null);
-  const remoteVideoRef = useRef(null);
-  const peerConnection = useRef(
-    new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
-    })
-  );
+  const [isClient, setIsClient] = useState(false);
+
+  const localVideoRef = useRef<HTMLVideoElement>(null);
+  const remoteVideoRef = useRef<HTMLVideoElement>(null);
+  const peerConnection = useRef<RTCPeerConnection | null>(null);
+  const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    socket.on("incomingCall", async ({ from, offer }) => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    // Create a single socket instance
+    socketRef.current = io("http://localhost:5000");
+
+    peerConnection.current = new RTCPeerConnection({
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+    });
+
+    socketRef.current.on("incomingCall", async ({ from, offer }) => {
       console.log("Incoming call from:", from);
+      if (!peerConnection.current) return;
+
+      await peerConnection.current.setRemoteDescription(
+        new RTCSessionDescription(offer)
+      );
       const answer = await peerConnection.current.createAnswer();
       await peerConnection.current.setLocalDescription(answer);
-      socket.emit("answerCall", { to: from, answer });
+      socketRef.current?.emit("answerCall", { to: from, answer });
 
       peerConnection.current.ontrack = (event) => {
         if (remoteVideoRef.current) {
@@ -30,52 +44,67 @@ const VideoCall = () => {
       };
     });
 
-    socket.on("callAnswered", async (answer) => {
+    socketRef.current.on("callAnswered", async (answer) => {
+      if (!peerConnection.current) return;
       await peerConnection.current.setRemoteDescription(
         new RTCSessionDescription(answer)
       );
-      setInCall(true);
     });
 
-    socket.on("candidate", async (candidate) => {
+    socketRef.current.on("candidate", async (candidate) => {
+      if (!peerConnection.current) return;
       await peerConnection.current.addIceCandidate(
         new RTCIceCandidate(candidate)
       );
     });
 
     peerConnection.current.onicecandidate = (event) => {
-      if (event.candidate) {
-        socket.emit("candidate", { to: callTo, candidate: event.candidate });
+      if (event.candidate && callTo) {
+        socketRef.current?.emit("candidate", {
+          to: callTo,
+          candidate: event.candidate,
+        });
       }
     };
 
-    peerConnection.current.ontrack = (event) => {
-      if (remoteVideoRef.current) {
-        remoteVideoRef.current.srcObject = event.streams[0];
-      }
+    return () => {
+      peerConnection.current?.close();
+      socketRef.current?.disconnect();
     };
-  }, [callTo]);
+  }, [callTo, isClient]);
 
   const registerUser = () => {
-    socket.emit("register", myPhoneNumber);
+    if (!isClient || !socketRef.current) return;
+    socketRef.current.emit("register", myPhoneNumber);
   };
 
   const startCall = async () => {
+    if (!isClient || !peerConnection.current || !socketRef.current) return;
+
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true,
     });
+
     if (localVideoRef.current) {
       localVideoRef.current.srcObject = stream;
     }
+
     stream
       .getTracks()
-      .forEach((track) => peerConnection.current.addTrack(track, stream));
+      .forEach((track) => peerConnection.current!.addTrack(track, stream));
 
     const offer = await peerConnection.current.createOffer();
     await peerConnection.current.setLocalDescription(offer);
-    socket.emit("startCall", { from: myPhoneNumber, to: callTo, offer });
+
+    socketRef.current.emit("startCall", {
+      from: myPhoneNumber,
+      to: callTo,
+      offer,
+    });
   };
+
+  if (!isClient) return null;
 
   return (
     <div className="flex flex-col items-center">
@@ -106,7 +135,6 @@ const VideoCall = () => {
       >
         Start Call
       </button>
-
       <div className="flex mt-4">
         <video
           ref={localVideoRef}
