@@ -14,7 +14,7 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [focusedField, setFocusedField] = useState(null);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
   const [passwordStrength, setPasswordStrength] = useState({
     hasLength: false,
     hasUpperCase: false,
@@ -60,7 +60,7 @@ const SignupForm = () => {
     return "bg-green-500";
   };
 
-  const handleSignup = async (e) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -94,7 +94,11 @@ const SignupForm = () => {
       // Redirect to home page after successful signup
       router.push("/dashboard");
     } catch (err) {
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred.");
+      }
       console.error("Signup error:", err);
     }
 

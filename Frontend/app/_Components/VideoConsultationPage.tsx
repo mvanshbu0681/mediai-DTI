@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const VideoConsultationPage = () => {
-  const [activeCall, setActiveCall] = useState(false);
+  const [activeCall, setActiveCall] = useState<number | false>(false);
 
   const upcomingAppointments = [
     {
@@ -31,7 +31,7 @@ const VideoConsultationPage = () => {
     },
   ];
 
-  const handleStartCall = (appointmentId) => {
+  const handleStartCall = (appointmentId: number) => {
     setActiveCall(appointmentId);
   };
 

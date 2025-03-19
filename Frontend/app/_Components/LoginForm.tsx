@@ -52,7 +52,7 @@ const LoginForm = () => {
       // Redirect to dashboard after successful login
       window.location.href = "/SymptomPage";
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       console.error("❌ Login error:", err);
     }
 
@@ -90,7 +90,7 @@ const LoginForm = () => {
       // Redirect to dashboard after successful login
       window.location.href = "/SymptomPage";
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
       console.error("❌ Google Login error:", err);
     }
 
