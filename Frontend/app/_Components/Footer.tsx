@@ -12,11 +12,12 @@ import {
   ArrowUp,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
-
+const [t] = useTranslation();
   useEffect(() => {
     setMounted(true);
 
@@ -105,8 +106,7 @@ const Footer = () => {
             </motion.div>
 
             <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              Revolutionizing healthcare with AI-powered solutions for everyone,
-              everywhere. Making quality healthcare accessible to all.
+              {t("footerdescription")}
             </p>
 
             <div className="flex space-x-3">
@@ -127,7 +127,7 @@ const Footer = () => {
             {/* Newsletter */}
             <div className="pt-4">
               <h4 className="text-base font-semibold mb-3 text-slate-900 dark:text-white">
-                Subscribe to our newsletter
+                {t("footernewsletter")}
               </h4>
               <div className="flex">
                 <input
@@ -149,7 +149,7 @@ const Footer = () => {
           {/* Quick Links */}
           <motion.div variants={item}>
             <h3 className="text-lg font-semibold mb-6 text-slate-900 dark:text-white">
-              Quick Links
+              {t("quickLinks")}
             </h3>
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
@@ -169,7 +169,7 @@ const Footer = () => {
           {/* Support */}
           <motion.div variants={item}>
             <h3 className="text-lg font-semibold mb-6 text-slate-900 dark:text-white">
-              Support
+              {t("footersupport")}
             </h3>
             <ul className="space-y-3">
               {supportLinks.map((link, index) => (
@@ -189,7 +189,7 @@ const Footer = () => {
           {/* Contact */}
           <motion.div variants={item}>
             <h3 className="text-lg font-semibold mb-6 text-slate-900 dark:text-white">
-              Contact
+              {t("footercontact")}
             </h3>
             <ul className="space-y-4">
               {contactInfo.map((item, index) => (
@@ -217,7 +217,7 @@ const Footer = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-slate-600 dark:text-slate-400 text-sm">
-              © 2024 MediAI. All rights reserved.
+              {t("footerrights")}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               {bottomLinks.map((link, index) => (

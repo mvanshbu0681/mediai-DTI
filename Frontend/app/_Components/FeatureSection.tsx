@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card, CardContent } from "../../components/ui/card";
@@ -11,9 +11,11 @@ import {
   FileText,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const FeaturesSection = () => {
   const [mounted, setMounted] = useState(false);
+  const { t } = useTranslation(); // Correctly destructure `t` from `useTranslation`
 
   useEffect(() => {
     setMounted(true);
@@ -37,41 +39,35 @@ const FeaturesSection = () => {
   const features = [
     {
       icon: <Brain className="h-8 w-8 text-blue-600" />,
-      title: "AI Diagnosis",
-      description:
-        "Get instant AI-powered medical suggestions based on your symptoms with high accuracy and personalized treatment recommendations.",
+      title: t("featureTitleDiagnosis"), // Correct usage of `t`
+      description: t("featureDescriptionDiagnosis"), // Correct usage of `t`
     },
     {
       icon: <Video className="h-8 w-8 text-green-600" />,
-      title: "Video Consultations",
-      description:
-        "Connect with qualified doctors through high-quality video calls anytime, anywhere, without leaving the comfort of your home.",
-      route: "/VideoConsulatationPage",
+      title: t("featureTitleConsultation"), // Correct usage of `t`
+      description: t("featureDescriptionConsultation"), // Correct usage of `t`
+      route: "/VideoConsultationPage",
     },
     {
       icon: <MessageSquare className="h-8 w-8 text-purple-600" />,
-      title: "24/7 Support",
-      description:
-        "Access medical support anytime through our advanced chat system with real-time responses from our AI and medical professionals.",
+      title: t("featureTitleSupport"), // Correct usage of `t`
+      description: t("featureDescriptionSupport"), // Correct usage of `t`
     },
-    {
-      icon: <Clock className="h-8 w-8 text-blue-600" />,
-      title: "Quick Prescriptions",
-      description:
-        "Receive electronic prescriptions quickly after your consultations, with direct delivery options to your preferred pharmacy.",
-    },
-    {
-      icon: <Shield className="h-8 w-8 text-green-600" />,
-      title: "Secure Health Records",
-      description:
-        "Your medical data is protected with enterprise-grade encryption and complies with all healthcare privacy regulations.",
-    },
-    {
-      icon: <FileText className="h-8 w-8 text-purple-600" />,
-      title: "Health Tracking",
-      description:
-        "Monitor your health metrics over time with intuitive dashboards and receive personalized insights for better wellbeing.",
-    },
+    // {
+    //   icon: <Clock className="h-8 w-8 text-blue-600" />,
+    //   title: t("featureTitleQuickPrescriptions"), // Add translation key for "Quick Prescriptions"
+    //   description: t("featureDescriptionQuickPrescriptions"), // Add translation key for description
+    // },
+    // {
+    //   icon: <Shield className="h-8 w-8 text-green-600" />,
+    //   title: t("featureTitleSecureRecords"), // Add translation key for "Secure Health Records"
+    //   description: t("featureDescriptionSecureRecords"), // Add translation key for description
+    // },
+    // {
+    //   icon: <FileText className="h-8 w-8 text-purple-600" />,
+    //   title: t("featureTitleHealthTracking"), // Add translation key for "Health Tracking"
+    //   description: t("featureDescriptionHealthTracking"), // Add translation key for description
+    // },
   ];
 
   return (
@@ -98,15 +94,14 @@ const FeaturesSection = () => {
             className="inline-block mb-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-green-500/10 backdrop-blur-sm border border-blue-200/30 dark:border-blue-700/30"
           >
             <span className="text-blue-700 dark:text-blue-400 font-medium text-sm">
-              Cutting-Edge Technology
+              {t("featureSubtitle")} {/* Use translation for subtitle */}
             </span>
           </motion.div>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-            Advanced Healthcare Features
+            {t("featureTitle")} {/* Use translation for title */}
           </h2>
           <p className="text-slate-600 dark:text-slate-300 mb-12 max-w-2xl mx-auto text-lg">
-            Experience healthcare reimagined with our innovative features
-            designed for your convenience and wellbeing
+            {t("featureDescription")} {/* Use translation for description */}
           </p>
         </motion.div>
 
@@ -141,7 +136,7 @@ const FeaturesSection = () => {
                           whileTap={{ scale: 0.95 }}
                           className="mt-auto px-5 py-2 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:from-blue-700 hover:to-green-700 transition shadow-md shadow-blue-500/20 font-medium"
                         >
-                          Start Consultation
+                          {t("startConsultation")} {/* Add translation key */}
                         </motion.button>
                       </Link>
                     )}
@@ -150,31 +145,6 @@ const FeaturesSection = () => {
               </Card>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* CTA Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 p-8 rounded-2xl bg-gradient-to-r from-blue-600/90 to-green-600/90 text-white text-center shadow-xl"
-        >
-          <h3 className="text-2xl font-bold mb-4">
-            Ready to experience the future of healthcare?
-          </h3>
-          <p className="mb-6 max-w-2xl mx-auto">
-            Join thousands of satisfied users who have transformed their
-            healthcare experience with MediAI.
-          </p>
-          <Link href={'/GetstartedPage'}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 bg-white text-blue-600 rounded-lg font-medium shadow-md hover:bg-slate-100 transition"
-            >
-              Get Started Today
-            </motion.button>
-          </Link>
         </motion.div>
       </div>
     </div>

@@ -1,11 +1,14 @@
 'use client';
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "../../components/ui/button";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import LanguageSelector from "./LanguageSelector";
 
 const Navbar = () => {
+  const { t} = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -22,6 +25,7 @@ const Navbar = () => {
     setDarkMode(!darkMode);
     document.documentElement.classList.toggle("dark");
   };
+
 
   return (
     <motion.nav
@@ -49,7 +53,7 @@ const Navbar = () => {
           </motion.div>
 
           <div className="hidden md:flex items-center space-x-8">
-            {["Features", "Solutions", "About", "Contact"].map(
+            {[t("features"), t("solutions"), t("about"), t("contact")].map(
               (item, index) => (
                 <motion.a
                   key={index}
@@ -58,7 +62,7 @@ const Navbar = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {item}
+                  {t(item)}
                 </motion.a>
               )
             )}
@@ -88,10 +92,14 @@ const Navbar = () => {
                   size="sm"
                   className="hidden sm:inline-flex bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 shadow-md shadow-blue-500/30 font-medium"
                 >
-                  Sign In
+                  {t("signIn")}
                 </Button>
               </motion.div>
             </Link>
+
+            <div>
+              <LanguageSelector />
+            </div>
 
             <motion.button
               whileHover={{ scale: 1.1 }}

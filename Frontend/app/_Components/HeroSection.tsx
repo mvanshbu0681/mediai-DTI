@@ -4,10 +4,11 @@ import { Button } from "../../components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false);
-
+  const [t] = useTranslation();
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -50,7 +51,7 @@ const HeroSection = () => {
             <div className="flex items-center space-x-2">
               <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
               <span className="text-blue-700 dark:text-blue-400 font-medium text-sm">
-                AI-Powered Healthcare Platform
+                {t("subtitle")}
               </span>
             </div>
           </motion.div>
@@ -59,10 +60,10 @@ const HeroSection = () => {
             variants={item}
             className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-tight"
           >
-            Revolutionary Healthcare
+            {t("title1")}
             <br />
             <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-green-600 bg-clip-text text-transparent">
-              At Your Fingertips
+              {t("title2")}
             </span>
           </motion.h1>
 
@@ -70,9 +71,7 @@ const HeroSection = () => {
             variants={item}
             className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
-            Experience the future of healthcare with AI-powered diagnostics and
-            instant access to qualified medical professionals, anytime,
-            anywhere.
+            {t("description")}
           </motion.p>
 
           <motion.div
@@ -88,7 +87,7 @@ const HeroSection = () => {
                   size="lg"
                   className="bg-gradient-to-r from-blue-600 via-purple-500 to-green-600 hover:from-blue-700 hover:via-purple-600 hover:to-green-700 shadow-lg shadow-blue-500/30 dark:shadow-blue-900/30 w-full sm:w-auto"
                 >
-                  Check Symptoms
+                  {t("checkSymptoms")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </motion.div>
@@ -99,7 +98,7 @@ const HeroSection = () => {
                 variant="outline"
                 className="border-2 border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 transition-colors w-full sm:w-auto backdrop-blur-sm"
               >
-                Book Consultation
+                {t("bookConsultation")}
               </Button>
             </motion.div>
           </motion.div>
@@ -110,9 +109,9 @@ const HeroSection = () => {
             className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6"
           >
             {[
-              { label: "Satisfied Patients", value: "10K+" },
-              { label: "Medical Professionals", value: "500+" },
-              { label: "Accurate Diagnoses", value: "98%" },
+              { label: t("patients"), value: "10K+" },
+              { label: t("professionals"), value: "500+" },
+              { label: t("accuracy"), value: "98%" },
             ].map((stat, index) => (
               <motion.div
                 key={index}
